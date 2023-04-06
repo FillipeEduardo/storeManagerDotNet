@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using storeManagerDotNet.Data;
 using storeManagerDotNet.DTO;
 using storeManagerDotNet.Models;
+using storeManagerDotNet.Repositories.Abstractions;
 
 namespace storeManagerDotNet.Controllers
 {
@@ -11,11 +10,12 @@ namespace storeManagerDotNet.Controllers
     [Route("products")]
     public class ProductController : ControllerBase
     {
-        private readonly StoreContext _context;
+        private readonly IProductRepository _Products;
         private readonly IMapper _mapper;
 
-        public ProductController(StoreContext context, IMapper mapper) {
-            _context = context;
+        public ProductController(IProductRepository products, IMapper mapper)
+        {
+            _Products = products;
             _mapper = mapper;
         }
 
@@ -24,7 +24,7 @@ namespace storeManagerDotNet.Controllers
         {
             try
             {
-                var dados = await _context.Products.AsNoTracking().ToListAsync();
+                var dados = await _Products.Get();
                 dados = dados.OrderBy(x => x.Id).ToList();
 
                 return Ok(dados);
@@ -39,7 +39,7 @@ namespace storeManagerDotNet.Controllers
         {
             try
             {
-                var dados = await _context.Products.FindAsync(id);
+                var dados = await _Products.GetById(id);
                 if (dados is null)
                 {
                     return NotFound(new { message = "Product not found" });
@@ -49,7 +49,7 @@ namespace storeManagerDotNet.Controllers
             }
             catch (Exception)
             {
-                return NotFound( new { message = "Product not found" });
+                return NotFound(new { message = "Product not found" });
             }
         }
 
@@ -59,8 +59,8 @@ namespace storeManagerDotNet.Controllers
             try
             {
                 var product = _mapper.Map<Product>(productDTO);
-                await _context.Products.AddAsync(product);
-                await _context.SaveChangesAsync();
+                await _Products.Create(product);
+                await _Products.Commit();
                 return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
             }
             catch (Exception)
@@ -69,5 +69,6 @@ namespace storeManagerDotNet.Controllers
             }
 
         }
+
     }
 }

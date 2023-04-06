@@ -1,15 +1,13 @@
-using Microsoft.EntityFrameworkCore;
-using storeManagerDotNet.Data;
 using storeManagerDotNet.DTO;
+using storeManagerDotNet.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(StoreManagerProfile));
-
-var connectionString = builder.Configuration.GetConnectionString("Default");
-builder.Services.AddDbContext<StoreContext>(opt => opt.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddEntityFramework(builder.Configuration);
+builder.Services.AddRepositories();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
