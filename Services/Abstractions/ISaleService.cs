@@ -4,6 +4,7 @@ namespace storeManagerDotNet.Services.Abstractions
 {
     public interface ISaleService
     {
-        Task CreateSale(IEnumerable<SaleDTO> salesDTO);
+        Task<ResultSale> CreateSale(IEnumerable<SaleDTO> salesDTO);
+        Task<List<ResultSaleProduct>> GetAllSales();
     }
 }

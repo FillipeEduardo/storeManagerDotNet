@@ -18,11 +18,11 @@ namespace storeManagerDotNet.Services
             _product = product;
         }
 
-        public async Task CreateSale(IEnumerable<SaleDTO> saleDTO)
+        public async Task<ResultSale> CreateSale(IEnumerable<SaleDTO> saleDTO)
         {
             foreach (var item in saleDTO)
             {
-                var product = await _product.GetById(item.ProductId);
+                await _product.GetById(item.ProductId);
             }
 
             var sale = new Sale();
@@ -40,6 +40,29 @@ namespace storeManagerDotNet.Services
                 await _saleProducts.Create(saleProduct);
             }
             await _saleProducts.Commit();
+            return new ResultSale() {
+            Id = sale.Id,
+            ItemsSold = saleDTO,
+            };
+        }
+
+        public async Task<List<ResultSaleProduct>> GetAllSales()
+        {
+            var temp = await _saleProducts.GetAll();
+            List<ResultSaleProduct> result = new List<ResultSaleProduct>();
+            foreach (var item in temp)
+            {
+                var sale = await _sales.GetById(item.SaleId);
+                ResultSaleProduct resultSaleProduct = new ResultSaleProduct()
+                {
+                    SaleId = item.SaleId,
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    Date = sale.Date,
+                };
+                result.Add(resultSaleProduct);
+            }
+            return result;
         }
 
     }

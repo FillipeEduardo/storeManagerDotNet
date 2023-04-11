@@ -1,6 +1,4 @@
-﻿
-
-namespace storeManagerDotNet.DTO;
+﻿namespace storeManagerDotNet.DTO;
 
 public class SaleDTO
 {
@@ -8,5 +6,4 @@ public class SaleDTO
     public int ProductId { get; set; }
 
     public int Quantity { get; set; }
-
 }
