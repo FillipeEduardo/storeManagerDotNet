@@ -6,5 +6,6 @@ namespace storeManagerDotNet.Services.Abstractions
     {
         Task<ResultSale> CreateSale(IEnumerable<SaleDTO> salesDTO);
         Task<List<ResultSaleProduct>> GetAllSales();
+        Task<List<ResultSaleProduct>> GetSalesById(int id);
     }
 }

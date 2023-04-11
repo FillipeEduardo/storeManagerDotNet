@@ -1,4 +1,6 @@
-﻿using storeManagerDotNet.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using storeManagerDotNet.Data;
+using storeManagerDotNet.DTO;
 using storeManagerDotNet.Models;
 using storeManagerDotNet.Repositories.Abstractions;
 
@@ -8,6 +10,7 @@ namespace storeManagerDotNet.Repositories
     {
         public SaleProductRepository(StoreContext storeContext) : base(storeContext)
         {
+
         }
     }
 }

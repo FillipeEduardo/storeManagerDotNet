@@ -65,5 +65,13 @@ namespace storeManagerDotNet.Services
             return result;
         }
 
+        public async Task<List<ResultSaleProduct>> GetSalesById(int id)
+        {
+            var result = await GetAllSales();
+            result = result.Where(x => x.SaleId == id).ToList();
+            
+            return result.Count == 0 ? throw new Exception("Sale not found") : result;
+        }
+
     }
 }

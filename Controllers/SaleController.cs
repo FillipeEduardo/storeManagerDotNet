@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using storeManagerDotNet.DTO;
 using storeManagerDotNet.Services.Abstractions;
-using System.Text.Json;
 
 namespace storeManagerDotNet.Controllers;
 
 [ApiController]
 [Route("sales")]
-public class SaleController :ControllerBase
+public class SaleController : ControllerBase
 {
     private readonly ISaleService _saleService;
 
@@ -33,10 +32,10 @@ public class SaleController :ControllerBase
         }
         catch (Exception e)
         {
-            ModelState.AddModelError("Validation", e.Message);
+            ModelState.AddModelError("validation", e.Message);
             return ValidationProblem(ModelState);
         }
-        
+
     }
 
     [HttpGet]
@@ -50,6 +49,20 @@ public class SaleController :ControllerBase
         catch (Exception e)
         {
             return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetById(int id)
+    {
+        try
+        {
+            return Ok(await _saleService.GetSalesById(id));
+        }
+        catch (Exception e)
+        {
+            ModelState.AddModelError("validation", e.Message);
+            return ValidationProblem(ModelState);
         }
     }
 }
