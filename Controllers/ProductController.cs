@@ -69,5 +69,21 @@ namespace storeManagerDotNet.Controllers
 
         }
 
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, ProductDTO productDTO)
+        {
+            try
+            {
+            var product = _mapper.Map<Product>(productDTO);
+             return Ok(await _Products.UpdateProduct(id, product));
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("validation", e.Message);
+                return ValidationProblem(ModelState);
+            }
+
+        }
+
     }
 }

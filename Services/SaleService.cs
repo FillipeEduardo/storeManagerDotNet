@@ -72,6 +72,5 @@ namespace storeManagerDotNet.Services
             
             return result.Count == 0 ? throw new Exception("Sale not found") : result;
         }
-
     }
 }

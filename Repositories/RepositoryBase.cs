@@ -31,6 +31,11 @@ public class RepositoryBase<TEntity> :IUnitOfWork, IRepositoryBase<TEntity> wher
         await _DbSet.AddAsync(entity);
     }
 
+    public void Update(TEntity entity)
+    {
+        _DbSet.Update(entity);
+    }
+
     public async Task<int> Commit()
     {
         return await _StoreContext.SaveChangesAsync();

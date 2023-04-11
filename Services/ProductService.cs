@@ -1,4 +1,5 @@
-﻿using storeManagerDotNet.Models;
+﻿using storeManagerDotNet.DTO;
+using storeManagerDotNet.Models;
 using storeManagerDotNet.Repositories.Abstractions;
 using storeManagerDotNet.Services.Abstractions;
 
@@ -29,6 +30,14 @@ namespace storeManagerDotNet.Services
             return await _Products.GetAll();
         }
 
-
+        public async Task<Product> UpdateProduct(int id, Product product)
+        {
+            var result = await GetById(id);
+            if (result is null) throw new Exception("Product not found");
+            result.Name = product.Name;
+            _Products.Update(result);
+            await _Products.Commit();
+            return result;
+        }
     }
 }
