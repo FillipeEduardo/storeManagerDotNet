@@ -20,6 +20,13 @@ namespace storeManagerDotNet.Services
             await _Products.Commit();
         }
 
+        public async Task Delete(int id)
+        {
+            var product = await _Products.GetById(id);
+            _Products.Delete(product);
+            await _Products.Commit();
+        }
+
         public async Task<Product> GetById(int id)
         {
             return await _Products.GetById(id);

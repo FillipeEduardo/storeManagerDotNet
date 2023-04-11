@@ -36,6 +36,11 @@ public class RepositoryBase<TEntity> :IUnitOfWork, IRepositoryBase<TEntity> wher
         _DbSet.Update(entity);
     }
 
+    public void Delete(TEntity entity)
+    {
+        _DbSet.Remove(entity);
+    }
+
     public async Task<int> Commit()
     {
         return await _StoreContext.SaveChangesAsync();

@@ -8,5 +8,6 @@ namespace storeManagerDotNet.Services.Abstractions
         Task<Product> GetById(int id);
         Task Create(Product product);
         Task<Product> UpdateProduct(int id, Product product);
+        Task Delete(int id);
     }
 }

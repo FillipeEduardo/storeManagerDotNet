@@ -40,16 +40,13 @@ namespace storeManagerDotNet.Controllers
             try
             {
                 var dados = await _Products.GetById(id);
-                if (dados is null)
-                {
-                    return NotFound(new { message = "Product not found" });
-                }
                 return Ok(dados);
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return NotFound(new { message = "Product not found" });
+                ModelState.AddModelError("validation", e.Message);
+                return NotFound(ModelState);
             }
         }
 
@@ -83,6 +80,20 @@ namespace storeManagerDotNet.Controllers
                 return ValidationProblem(ModelState);
             }
 
+        }
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Remove(int id)
+        {
+            try
+            {
+                await _Products.Delete(id);
+                return StatusCode(204);
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("validation", e.Message);
+                return ValidationProblem(ModelState);
+            }
         }
 
     }
