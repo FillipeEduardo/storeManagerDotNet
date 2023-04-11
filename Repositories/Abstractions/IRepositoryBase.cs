@@ -2,7 +2,7 @@
 {
     public interface IRepositoryBase<TEntity> where TEntity : class
     {
-        Task<IEnumerable<TEntity>> Get();
+        Task<IEnumerable<TEntity>> GetAll();
         Task<TEntity> GetById(int id);
         Task Create(TEntity entity);
     }

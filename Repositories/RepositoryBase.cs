@@ -15,7 +15,7 @@ public class RepositoryBase<TEntity> :IUnitOfWork, IRepositoryBase<TEntity> wher
         _DbSet = storeContext.Set<TEntity>();
     }
 
-    public async Task<IEnumerable<TEntity>> Get()
+    public async Task<IEnumerable<TEntity>> GetAll()
     {
         return await _DbSet.AsNoTracking().ToListAsync();
     }
@@ -23,7 +23,7 @@ public class RepositoryBase<TEntity> :IUnitOfWork, IRepositoryBase<TEntity> wher
     public async Task<TEntity> GetById(int id)
     {
         var result = await _DbSet.FindAsync(id);
-        return result is null ? throw new Exception() : result;
+        return result is null ? throw new Exception("Product not found") : result;
     }
 
     public async Task Create(TEntity entity)

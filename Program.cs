@@ -8,6 +8,7 @@ builder.Services.AddControllers();
 builder.Services.AddAutoMapper(typeof(StoreManagerProfile));
 builder.Services.AddEntityFramework(builder.Configuration);
 builder.Services.AddRepositories();
+builder.Services.AddServices();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

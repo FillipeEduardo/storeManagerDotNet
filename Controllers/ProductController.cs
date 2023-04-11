@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using storeManagerDotNet.DTO;
 using storeManagerDotNet.Models;
-using storeManagerDotNet.Repositories.Abstractions;
+using storeManagerDotNet.Services.Abstractions;
 
 namespace storeManagerDotNet.Controllers
 {
@@ -10,10 +10,10 @@ namespace storeManagerDotNet.Controllers
     [Route("products")]
     public class ProductController : ControllerBase
     {
-        private readonly IProductRepository _Products;
+        private readonly IProductService _Products;
         private readonly IMapper _mapper;
 
-        public ProductController(IProductRepository products, IMapper mapper)
+        public ProductController(IProductService products, IMapper mapper)
         {
             _Products = products;
             _mapper = mapper;
@@ -24,7 +24,7 @@ namespace storeManagerDotNet.Controllers
         {
             try
             {
-                var dados = await _Products.Get();
+                var dados = await _Products.GetProducts();
                 dados = dados.OrderBy(x => x.Id).ToList();
 
                 return Ok(dados);
@@ -60,7 +60,6 @@ namespace storeManagerDotNet.Controllers
             {
                 var product = _mapper.Map<Product>(productDTO);
                 await _Products.Create(product);
-                await _Products.Commit();
                 return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
             }
             catch (Exception)
