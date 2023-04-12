@@ -40,9 +40,10 @@ namespace storeManagerDotNet.Services
                 await _saleProducts.Create(saleProduct);
             }
             await _saleProducts.Commit();
-            return new ResultSale() {
-            Id = sale.Id,
-            ItemsSold = saleDTO,
+            return new ResultSale()
+            {
+                Id = sale.Id,
+                ItemsSold = saleDTO,
             };
         }
 
@@ -69,7 +70,7 @@ namespace storeManagerDotNet.Services
         {
             var result = await GetAllSales();
             result = result.Where(x => x.SaleId == id).ToList();
-            
+
             return result.Count == 0 ? throw new Exception("Sale not found") : result;
         }
     }

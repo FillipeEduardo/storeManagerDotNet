@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using storeManagerDotNet.Data;
-using storeManagerDotNet.DTO;
+﻿using storeManagerDotNet.Data;
 using storeManagerDotNet.Models;
 using storeManagerDotNet.Repositories.Abstractions;
 

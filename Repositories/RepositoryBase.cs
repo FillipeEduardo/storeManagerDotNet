@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using storeManagerDotNet.Data;
+using storeManagerDotNet.Exceptions;
 using storeManagerDotNet.Repositories.Abstractions;
 
 namespace storeManagerDotNet.Repositories;
 
-public class RepositoryBase<TEntity> :IUnitOfWork, IRepositoryBase<TEntity> where TEntity : class
+public class RepositoryBase<TEntity> : IUnitOfWork, IRepositoryBase<TEntity> where TEntity : class
 {
     private readonly DbSet<TEntity> _DbSet;
     private readonly StoreContext _StoreContext;
@@ -23,7 +24,7 @@ public class RepositoryBase<TEntity> :IUnitOfWork, IRepositoryBase<TEntity> wher
     public async Task<TEntity> GetById(int id)
     {
         var result = await _DbSet.FindAsync(id);
-        return result is null ? throw new Exception("Product not found") : result;
+        return result is null ? throw new DbNotFoundException("Product not found") : result;
     }
 
     public async Task Create(TEntity entity)

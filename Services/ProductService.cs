@@ -1,5 +1,4 @@
-﻿using storeManagerDotNet.DTO;
-using storeManagerDotNet.Models;
+﻿using storeManagerDotNet.Models;
 using storeManagerDotNet.Repositories.Abstractions;
 using storeManagerDotNet.Services.Abstractions;
 

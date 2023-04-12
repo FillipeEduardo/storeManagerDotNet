@@ -10,7 +10,7 @@ public class StoreContext : DbContext
     public DbSet<SaleProduct> SalesProducts { get; set; }
     public DbSet<Sale> Sales { get; set; }
 
-    public StoreContext (DbContextOptions<StoreContext> options) : base (options)
+    public StoreContext(DbContextOptions<StoreContext> options) : base(options)
     {
 
     }

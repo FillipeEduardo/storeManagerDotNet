@@ -22,78 +22,37 @@ namespace storeManagerDotNet.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Product>>> Get()
         {
-            try
-            {
-                var dados = await _Products.GetProducts();
-                dados = dados.OrderBy(x => x.Id).ToList();
-
-                return Ok(dados);
-            }
-            catch (Exception)
-            {
-                return NotFound();
-            }
+            var dados = await _Products.GetProducts();
+            dados = dados.OrderBy(x => x.Id).ToList();
+            return Ok(dados);
         }
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Product>> GetById(int id)
         {
-            try
-            {
-                var dados = await _Products.GetById(id);
-                return Ok(dados);
-
-            }
-            catch (Exception e)
-            {
-                ModelState.AddModelError("validation", e.Message);
-                return NotFound(ModelState);
-            }
+            var dados = await _Products.GetById(id);
+            return Ok(dados);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> Post(ProductDTO productDTO)
+        public async Task<IActionResult> Post(ProductDTO productDTO)
         {
-            try
-            {
-                var product = _mapper.Map<Product>(productDTO);
-                await _Products.Create(product);
-                return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-
+            var product = _mapper.Map<Product>(productDTO);
+            await _Products.Create(product);
+            return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
         }
 
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(int id, ProductDTO productDTO)
         {
-            try
-            {
             var product = _mapper.Map<Product>(productDTO);
-             return Ok(await _Products.UpdateProduct(id, product));
-            }
-            catch (Exception e)
-            {
-                ModelState.AddModelError("validation", e.Message);
-                return ValidationProblem(ModelState);
-            }
-
+            return Ok(await _Products.UpdateProduct(id, product));
         }
+
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Remove(int id)
         {
-            try
-            {
-                await _Products.Delete(id);
-                return StatusCode(204);
-            }
-            catch (Exception e)
-            {
-                ModelState.AddModelError("validation", e.Message);
-                return ValidationProblem(ModelState);
-            }
+            await _Products.Delete(id);
+            return StatusCode(204);
         }
 
     }

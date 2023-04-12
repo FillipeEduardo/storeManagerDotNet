@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using storeManagerDotNet.Data;
-using storeManagerDotNet.Repositories.Abstractions;
 using storeManagerDotNet.Repositories;
+using storeManagerDotNet.Repositories.Abstractions;
 
 namespace storeManagerDotNet.Extensions;
 
@@ -21,5 +21,5 @@ public static class DataExtensions
         services.AddScoped<ISaleProductRepository, SaleProductRepository>();
         return services;
     }
-    
+
 }
